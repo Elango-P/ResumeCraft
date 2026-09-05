@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Copy, Plus, Trash2 } from "lucide-react";
 import { z } from "zod";
 import { SortableCard, SortableList } from "@/components/builder/sortable-list";
 import { FormField, SectionIntro, Tips } from "@/components/builder/form-field";
+import { MonthYearPicker } from "@/components/builder/month-year-picker";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -129,14 +130,30 @@ function ExperienceItem({ item }: { item: Experience }) {
           <Input id={`${item.id}-location`} {...form.register("location")} />
         </FormField>
         <FormField label="Start date" htmlFor={`${item.id}-start`}>
-          <Input id={`${item.id}-start`} type="month" {...form.register("startDate")} />
+          <Controller
+            control={form.control}
+            name="startDate"
+            render={({ field }) => (
+              <MonthYearPicker
+                id={`${item.id}-start`}
+                value={field.value}
+                onChange={field.onChange}
+              />
+            )}
+          />
         </FormField>
         <FormField label="End date" htmlFor={`${item.id}-end`}>
-          <Input
-            id={`${item.id}-end`}
-            type="month"
-            disabled={current}
-            {...form.register("endDate")}
+          <Controller
+            control={form.control}
+            name="endDate"
+            render={({ field }) => (
+              <MonthYearPicker
+                id={`${item.id}-end`}
+                value={field.value}
+                onChange={field.onChange}
+                disabled={current}
+              />
+            )}
           />
         </FormField>
         <div className="flex items-center gap-2 sm:col-span-2">

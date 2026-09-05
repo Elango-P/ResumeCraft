@@ -1,11 +1,18 @@
 import { FolderGit2, Globe, Link2, Mail, MapPin, Phone } from "lucide-react";
 import type { Resume } from "@/features/resume/resume.types";
-import { displayUrl, EMPLOYMENT_TYPE_LABELS } from "@/features/resume/resume.utils";
+import {
+  displayUrl,
+  EMPLOYMENT_TYPE_LABELS,
+  formatMonthYear,
+} from "@/features/resume/resume.utils";
 import {
   BulletList,
   DateRangeText,
   fontSizeClass,
   languageLabel,
+  ResumeSection,
+  resumeSectionClass,
+  SectionHeading,
   visible,
 } from "./shared";
 
@@ -18,8 +25,8 @@ export function ModernProfessionalTemplate({ resume }: { resume: Resume }) {
       className={`resume-sheet grid min-h-[297mm] grid-cols-[34%_1fr] ${fontSizeClass(resume)}`}
       style={{ ["--resume-accent" as string]: accent }}
     >
-      <aside className="space-y-5 bg-slate-50 px-5 py-8 text-slate-800">
-        <header>
+      <aside className="space-y-1 px-5 py-8 text-slate-800">
+        <header className="resume-entry pb-3">
           <h1 className="text-[20px] leading-tight font-bold text-slate-900">
             {personal.fullName || "Your Name"}
           </h1>
@@ -27,10 +34,8 @@ export function ModernProfessionalTemplate({ resume }: { resume: Resume }) {
             {personal.jobTitle || "Job Title"}
           </p>
         </header>
-        <section className="resume-entry space-y-1.5">
-          <h2 className="text-[10px] font-semibold tracking-[0.16em] uppercase" style={{ color: accent }}>
-            Contact
-          </h2>
+        <section className={`resume-entry ${resumeSectionClass}`}>
+          <SectionHeading title="Contact" accent={accent} className="text-[10px]" />
           <ul className="space-y-1.5">
             {personal.email ? (
               <li className="flex items-start gap-1.5">
@@ -71,10 +76,8 @@ export function ModernProfessionalTemplate({ resume }: { resume: Resume }) {
           </ul>
         </section>
         {visible(resume, "skills") && resume.skills.some((cat) => cat.skills.length > 0) ? (
-          <section className="resume-entry">
-            <h2 className="mb-2 text-[10px] font-semibold tracking-[0.16em] uppercase" style={{ color: accent }}>
-              Skills
-            </h2>
+          <section className={`resume-entry ${resumeSectionClass}`}>
+            <SectionHeading title="Skills" accent={accent} className="text-[10px]" />
             <div className="space-y-2">
               {resume.skills
                 .filter((category) => category.skills.length > 0)
@@ -88,10 +91,8 @@ export function ModernProfessionalTemplate({ resume }: { resume: Resume }) {
           </section>
         ) : null}
         {visible(resume, "languages") && resume.languages.length > 0 ? (
-          <section className="resume-entry">
-            <h2 className="mb-2 text-[10px] font-semibold tracking-[0.16em] uppercase" style={{ color: accent }}>
-              Languages
-            </h2>
+          <section className={`resume-entry ${resumeSectionClass}`}>
+            <SectionHeading title="Languages" accent={accent} className="text-[10px]" />
             <ul className="space-y-1">
               {resume.languages.map((item) => (
                 <li key={item.id}>
@@ -102,17 +103,15 @@ export function ModernProfessionalTemplate({ resume }: { resume: Resume }) {
           </section>
         ) : null}
         {visible(resume, "certifications") && resume.certifications.length > 0 ? (
-          <section className="resume-entry">
-            <h2 className="mb-2 text-[10px] font-semibold tracking-[0.16em] uppercase" style={{ color: accent }}>
-              Certifications
-            </h2>
+          <section className={`resume-entry ${resumeSectionClass}`}>
+            <SectionHeading title="Certifications" accent={accent} className="text-[10px]" />
             <ul className="space-y-1.5">
               {resume.certifications.map((item) => (
                 <li key={item.id}>
                   <p className="font-semibold text-slate-900">{item.name}</p>
                   <p>
                     {item.issuer}
-                    {item.date ? ` · ${item.date}` : ""}
+                    {item.date ? ` · ${formatMonthYear(item.date)}` : ""}
                   </p>
                 </li>
               ))}
@@ -120,26 +119,14 @@ export function ModernProfessionalTemplate({ resume }: { resume: Resume }) {
           </section>
         ) : null}
       </aside>
-      <div className="space-y-4 px-6 py-8 text-slate-900">
+      <div className="space-y-1 px-6 py-8 text-slate-900">
         {visible(resume, "summary") && resume.summary.trim() ? (
-          <section className="resume-entry">
-            <h2
-              className="mb-1.5 border-b pb-1 text-[10px] font-semibold tracking-[0.16em] uppercase"
-              style={{ borderColor: accent, color: accent }}
-            >
-              Summary
-            </h2>
+          <ResumeSection title="Summary" accent={accent} className="text-[10px]">
             <p>{resume.summary}</p>
-          </section>
+          </ResumeSection>
         ) : null}
         {visible(resume, "experience") && resume.experience.length > 0 ? (
-          <section>
-            <h2
-              className="mb-2 border-b pb-1 text-[10px] font-semibold tracking-[0.16em] uppercase"
-              style={{ borderColor: accent, color: accent }}
-            >
-              Experience
-            </h2>
+          <ResumeSection title="Experience" accent={accent} className="text-[10px]">
             <div className="space-y-3">
               {resume.experience.map((item) => (
                 <div key={item.id} className="resume-entry">
@@ -160,16 +147,10 @@ export function ModernProfessionalTemplate({ resume }: { resume: Resume }) {
                 </div>
               ))}
             </div>
-          </section>
+          </ResumeSection>
         ) : null}
         {visible(resume, "projects") && resume.projects.length > 0 ? (
-          <section>
-            <h2
-              className="mb-2 border-b pb-1 text-[10px] font-semibold tracking-[0.16em] uppercase"
-              style={{ borderColor: accent, color: accent }}
-            >
-              Projects
-            </h2>
+          <ResumeSection title="Projects" accent={accent} className="text-[10px]">
             <div className="space-y-2.5">
               {resume.projects.map((item) => (
                 <div key={item.id} className="resume-entry">
@@ -184,16 +165,10 @@ export function ModernProfessionalTemplate({ resume }: { resume: Resume }) {
                 </div>
               ))}
             </div>
-          </section>
+          </ResumeSection>
         ) : null}
         {visible(resume, "education") && resume.education.length > 0 ? (
-          <section>
-            <h2
-              className="mb-2 border-b pb-1 text-[10px] font-semibold tracking-[0.16em] uppercase"
-              style={{ borderColor: accent, color: accent }}
-            >
-              Education
-            </h2>
+          <ResumeSection title="Education" accent={accent} className="text-[10px]">
             {resume.education.map((item) => (
               <div key={item.id} className="resume-entry mb-2">
                 <div className="flex items-baseline justify-between gap-3">
@@ -206,46 +181,37 @@ export function ModernProfessionalTemplate({ resume }: { resume: Resume }) {
                 {item.description ? <p className="mt-0.5">{item.description}</p> : null}
               </div>
             ))}
-          </section>
+          </ResumeSection>
         ) : null}
         {visible(resume, "awards") && resume.awards.length > 0 ? (
-          <section className="resume-entry">
-            <h2
-              className="mb-2 border-b pb-1 text-[10px] font-semibold tracking-[0.16em] uppercase"
-              style={{ borderColor: accent, color: accent }}
-            >
-              Awards
-            </h2>
+          <ResumeSection title="Awards" accent={accent} className="text-[10px]">
             {resume.awards.map((item) => (
-              <p key={item.id}>
+              <p key={item.id} className="resume-entry">
                 <span className="font-semibold">{item.title}</span>
                 {item.issuer ? ` · ${item.issuer}` : ""}
+                {item.date ? ` · ${formatMonthYear(item.date)}` : ""}
                 {item.description ? ` — ${item.description}` : ""}
               </p>
             ))}
-          </section>
+          </ResumeSection>
         ) : null}
         {visible(resume, "custom")
           ? resume.customSections.map((section) =>
               section.title.trim() ? (
-                <section key={section.id}>
-                  <h2
-                    className="mb-2 border-b pb-1 text-[10px] font-semibold tracking-[0.16em] uppercase"
-                    style={{ borderColor: accent, color: accent }}
-                  >
-                    {section.title}
-                  </h2>
+                <ResumeSection key={section.id} title={section.title} accent={accent} className="text-[10px]">
                   {section.entries.map((entry) => (
                     <div key={entry.id} className="resume-entry mb-2">
                       <p className="font-semibold">
                         {entry.heading}
                         {entry.subheading ? ` · ${entry.subheading}` : ""}
                       </p>
-                      {entry.date ? <p className="text-[10.5px]">{entry.date}</p> : null}
+                      {entry.date ? (
+                        <p className="text-[10.5px]">{formatMonthYear(entry.date)}</p>
+                      ) : null}
                       <BulletList items={entry.description} />
                     </div>
                   ))}
-                </section>
+                </ResumeSection>
               ) : null,
             )
           : null}

@@ -1,5 +1,5 @@
 import type { Resume } from "@/features/resume/resume.types";
-import { EMPLOYMENT_TYPE_LABELS } from "@/features/resume/resume.utils";
+import { EMPLOYMENT_TYPE_LABELS, formatMonthYear } from "@/features/resume/resume.utils";
 import {
   BulletList,
   ContactBits,
@@ -127,7 +127,7 @@ export function ClassicAtsTemplate({ resume }: { resume: Resume }) {
             <p key={item.id} className="resume-entry">
               <span className="font-semibold">{item.name}</span>
               {item.issuer ? ` · ${item.issuer}` : ""}
-              {item.date ? ` · ${item.date}` : ""}
+              {item.date ? ` · ${formatMonthYear(item.date)}` : ""}
             </p>
           ))}
         </ResumeSection>
@@ -150,6 +150,7 @@ export function ClassicAtsTemplate({ resume }: { resume: Resume }) {
               <span className="font-semibold">{item.title}</span>
               {item.issuer ? ` · ${item.issuer}` : ""}
               {item.description ? ` — ${item.description}` : ""}
+              {item.date ? ` · ${formatMonthYear(item.date)}` : ""}
             </p>
           ))}
         </ResumeSection>
@@ -165,7 +166,9 @@ export function ClassicAtsTemplate({ resume }: { resume: Resume }) {
                       {entry.heading}
                       {entry.subheading ? ` · ${entry.subheading}` : ""}
                     </p>
-                    {entry.date ? <p className="text-[10.5px]">{entry.date}</p> : null}
+                    {entry.date ? (
+                      <p className="text-[10.5px]">{formatMonthYear(entry.date)}</p>
+                    ) : null}
                     <BulletList items={entry.description} />
                   </div>
                 ))}

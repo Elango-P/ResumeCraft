@@ -7,21 +7,46 @@ import {
 import type { PersonalDetails, Resume } from "@/features/resume/resume.types";
 import { cn } from "@/lib/utils";
 
+/** Section spacing; horizontal rule is only on the heading (border-b). */
+export const resumeSectionClass = "resume-section mt-4 mb-2";
+
+const sectionHeadingClass =
+  "section-heading mb-1.5 border-b border-neutral-300 pb-1 text-[11px] font-semibold tracking-[0.14em] uppercase";
+
+export function SectionHeading({
+  title,
+  accent,
+  className,
+}: {
+  title: string;
+  accent?: string;
+  className?: string;
+}) {
+  return (
+    <h2
+      className={cn(sectionHeadingClass, className)}
+      style={accent ? { borderColor: accent, color: accent } : undefined}
+    >
+      {title}
+    </h2>
+  );
+}
+
 export function ResumeSection({
   title,
   children,
   className,
+  accent,
 }: {
   title: string;
   children: ReactNode;
   className?: string;
+  accent?: string;
 }) {
   if (!children) return null;
   return (
-    <section className={cn("resume-entry mb-3", className)}>
-      <h2 className="mb-1.5 text-[11px] font-semibold tracking-[0.14em] uppercase">
-        {title}
-      </h2>
+    <section className={cn(resumeSectionClass, "resume-entry", className)}>
+      <SectionHeading title={title} accent={accent} />
       {children}
     </section>
   );

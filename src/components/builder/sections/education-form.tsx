@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Copy, Plus, Trash2 } from "lucide-react";
 import { SortableCard, SortableList } from "@/components/builder/sortable-list";
 import { FormField, SectionIntro } from "@/components/builder/form-field";
+import { MonthYearPicker } from "@/components/builder/month-year-picker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -89,10 +90,30 @@ function EducationItem({ item }: { item: Education }) {
           <Input id={`${item.id}-grade`} {...form.register("grade")} />
         </FormField>
         <FormField label="Start date" htmlFor={`${item.id}-start`}>
-          <Input id={`${item.id}-start`} type="month" {...form.register("startDate")} />
+          <Controller
+            control={form.control}
+            name="startDate"
+            render={({ field }) => (
+              <MonthYearPicker
+                id={`${item.id}-start`}
+                value={field.value}
+                onChange={field.onChange}
+              />
+            )}
+          />
         </FormField>
         <FormField label="End date" htmlFor={`${item.id}-end`}>
-          <Input id={`${item.id}-end`} type="month" {...form.register("endDate")} />
+          <Controller
+            control={form.control}
+            name="endDate"
+            render={({ field }) => (
+              <MonthYearPicker
+                id={`${item.id}-end`}
+                value={field.value}
+                onChange={field.onChange}
+              />
+            )}
+          />
         </FormField>
         <FormField
           label="Description"

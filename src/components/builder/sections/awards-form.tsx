@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Copy, Plus, Trash2 } from "lucide-react";
 import { SortableCard, SortableList } from "@/components/builder/sortable-list";
 import { FormField, SectionIntro } from "@/components/builder/form-field";
+import { MonthYearPicker } from "@/components/builder/month-year-picker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -83,7 +84,17 @@ function AwardItem({ item }: { item: Award }) {
           <Input id={`${item.id}-issuer`} {...form.register("issuer")} />
         </FormField>
         <FormField label="Date" htmlFor={`${item.id}-date`}>
-          <Input id={`${item.id}-date`} type="month" {...form.register("date")} />
+          <Controller
+            control={form.control}
+            name="date"
+            render={({ field }) => (
+              <MonthYearPicker
+                id={`${item.id}-date`}
+                value={field.value}
+                onChange={field.onChange}
+              />
+            )}
+          />
         </FormField>
         <FormField label="Description" htmlFor={`${item.id}-desc`} className="sm:col-span-2">
           <Textarea id={`${item.id}-desc`} rows={3} {...form.register("description")} />

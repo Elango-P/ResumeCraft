@@ -141,6 +141,14 @@
   page-break-inside: avoid;
 }
 
+.resume-section {
+  margin-top: 1rem;
+}
+
+.resume-section .section-heading {
+  border-bottom: 1px solid #d1d5db;
+}
+
 @page {
   size: A4;
   margin: 12mm;
@@ -159,6 +167,12 @@
 
   .print-only {
     display: block !important;
+  }
+
+  .resume-section .section-heading {
+    border-bottom: 1px solid #9ca3af !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   #resume-print-root {

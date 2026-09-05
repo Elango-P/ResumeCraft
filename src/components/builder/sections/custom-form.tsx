@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Copy, Plus, Trash2 } from "lucide-react";
 import { z } from "zod";
 import { SortableCard, SortableList } from "@/components/builder/sortable-list";
 import { FormField, SectionIntro } from "@/components/builder/form-field";
+import { MonthYearPicker } from "@/components/builder/month-year-picker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -101,7 +102,17 @@ function CustomEntryItem({
           <Input id={`${entry.id}-sub`} {...form.register("subheading")} />
         </FormField>
         <FormField label="Date" htmlFor={`${entry.id}-date`}>
-          <Input id={`${entry.id}-date`} {...form.register("date")} />
+          <Controller
+            control={form.control}
+            name="date"
+            render={({ field }) => (
+              <MonthYearPicker
+                id={`${entry.id}-date`}
+                value={field.value}
+                onChange={field.onChange}
+              />
+            )}
+          />
         </FormField>
         <FormField label="Description" htmlFor={`${entry.id}-desc`} className="sm:col-span-2">
           <Textarea id={`${entry.id}-desc`} rows={3} {...form.register("description")} />
