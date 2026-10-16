@@ -24,6 +24,7 @@ export function useResumeDraft() {
   const deleteDraft = useResumeStore((state) => state.deleteDraft);
   const resetDemo = useResumeStore((state) => state.resetDemo);
   const setPreviewOpen = useResumeStore((state) => state.setPreviewOpen);
+  const importResumeDraft = useResumeStore((state) => state.importResumeDraft);
 
   const resume: Resume = drafts[activeDraftId] ?? createDemoResume();
   const draftList = useMemo(
@@ -67,5 +68,6 @@ export function useResumeDraft() {
     deleteDraft,
     resetDemo,
     setPreviewOpen,
+    importResumeDraft,
   };
 }

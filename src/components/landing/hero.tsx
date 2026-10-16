@@ -22,6 +22,9 @@ export function Hero() {
             </Link>
           </Button>
           <Button size="lg" variant="outline" asChild>
+            <Link href="/score">Check Resume Score</Link>
+          </Button>
+          <Button size="lg" variant="ghost" asChild>
             <Link href="/templates">View Templates</Link>
           </Button>
         </div>

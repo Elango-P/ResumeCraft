@@ -1,6 +1,8 @@
 "use client";
 
-import { CircleAlert, CircleCheck, Info, TriangleAlert } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, CircleAlert, CircleCheck, Info, TriangleAlert } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useResumeScore } from "@/features/resume/useResumeScore";
 import { useResumeDraft } from "@/features/resume/useResumeDraft";
 import { cn } from "@/lib/utils";
@@ -55,6 +57,14 @@ export function ScorePanel() {
           </li>
         ))}
       </ul>
+      <div className="mt-4 border-t pt-3">
+        <Button variant="ghost" size="sm" asChild className="w-full justify-between text-xs font-semibold text-primary hover:text-primary">
+          <Link href="/score?from=draft" target="_blank">
+            <span>Full ATS Heuristics Report</span>
+            <ArrowRight className="size-3.5" />
+          </Link>
+        </Button>
+      </div>
     </section>
   );
 }

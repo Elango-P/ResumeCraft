@@ -40,6 +40,7 @@ interface ResumeStore {
   deleteDraft: (id: string) => void;
   resetDemo: () => void;
   duplicateExperience: (id: string) => void;
+  importResumeDraft: (resume: Resume) => string;
 }
 
 function seedState(): Pick<
@@ -203,5 +204,23 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
       experience.splice(index + 1, 0, copy);
       return { ...resume, experience };
     });
+  },
+
+  importResumeDraft: (resume: Resume) => {
+    const id = resume.id || createId();
+    const imported: Resume = {
+      ...resume,
+      id,
+      updatedAt: new Date().toISOString(),
+    };
+    set((state) => ({
+      drafts: { ...state.drafts, [id]: imported },
+      draftOrder: [id, ...state.draftOrder.filter((d) => d !== id)],
+      activeDraftId: id,
+      isDirty: true,
+      activeSection: "personal",
+    }));
+    get().persistNow();
+    return id;
   },
 }));

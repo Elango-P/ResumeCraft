@@ -2,6 +2,7 @@ import Link from "next/link";
 
 const FOOTER_LINKS = [
   { href: "/templates", label: "Templates" },
+  { href: "/score", label: "Score Checker" },
   { href: "/pricing", label: "Pricing" },
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
